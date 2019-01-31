@@ -100,5 +100,11 @@ Ouput
     ]
 }
 ```
-## Bid
-1. Create a Bid
+## ```/bid ```
+### 1. Create a Bid <br/>
+Type POST
+**Input Params**
+**Output**
+**Example**
+Input
+Output
