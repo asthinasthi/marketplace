@@ -102,9 +102,44 @@ Ouput
 ```
 ## Endpoint: ```/bid ```
 ### 1. Create a Bid <br/>
-Type POST
+Type POST <br/>
 **Input Params**
+Bids must contain either ```fixedPrice``` or ```hourlyRate```&```hours``` for successful creation.
+- name (String): Name of the Bid 
+- projectId (Integer): Unique Id of the project
+- buyerId (Integer): Unique Id of the Buyer
+- fixedPrice (Float): Complete price for the entire project
+- hourlyRate (Float): Hourly rate for the project
+- hours (Float): Numbef of hours for the project
 **Output**
+- requestId (String): UniqueId for request
+- id (Integer): Primary Key of the Bid Object
+- message (String): Success/Failure Message
 **Example**
-Input
+Input - FixedPrice
+```
+{
+	"projectId":431,
+	"buyerId": 2,
+	"name": "Bid-1",
+	"fixedPrice":234
+}
+```
+Input - Hourly Rate
+```
+{
+	"projectId":431,
+	"buyerId": 2,
+	"name": "Bid-1",
+	"hourlyRate":25.6,
+  "hours": 35
+}
+```
 Output
+```
+{
+    "requestId": "ac5ab776-4248-439d-b96c-4ef7643f1392",
+    "id": 415,
+    "message": "Created Bid Successfully!"
+}
+```
