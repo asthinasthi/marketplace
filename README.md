@@ -132,7 +132,7 @@ Input - Hourly Rate
 	"buyerId": 2,
 	"name": "Bid-1",
 	"hourlyRate":25.6,
-  "hours": 35
+  	"hours": 35
 }
 ```
 Output
