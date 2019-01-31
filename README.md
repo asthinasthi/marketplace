@@ -8,6 +8,8 @@ Guidelines about using the API. <br/>
 - Postman for acceptance test/usability testing of API
 - Mockito tests for unit testing
 
+**Architecture Diagram** <br/>
+![alt text](https://github.com/asthinasthi/marketplace/blob/master/architecture/IntuitMarketplace.jpg "Architecture Diagram")
 **ER Diagram** <br/>
 ![alt text](https://github.com/asthinasthi/marketplace/blob/master/architecture/ERDiagram.png "ER Diagram")
 
