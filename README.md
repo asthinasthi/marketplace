@@ -77,6 +77,7 @@ By default no input params is required. Input params can be used to further filt
   - sellerId (Integer): UniqueId of the Seller of this Project
   - description (String): Description of the project
   - deadline (yyyy-MM-ddTHH:MM:SS+0000): Deadline of the project
+  
 **Example** <br/>
 Input <br/>
 ```{}```
