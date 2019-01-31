@@ -1,6 +1,14 @@
 # Marketplace
+Guidelines about using the API.
+**Tech Stack:**
+- Spring Boot with Embedded Tomcat
+- MySQL Database
+- Hibernate JPA Provider
+- Rest Services are built with Spring Controllers
+- Postman for acceptance test/usability testing of API
+- Mockito tests for unit testing
 
-# Available API's
+## Available API's
 
 ## Endpoint: ```/project``` 
 ### 1. Create a Project <br/>
@@ -143,3 +151,6 @@ Output
     "message": "Created Bid Successfully!"
 }
 ```
+
+## Background Services
+A background polls the database every min for projects due. For every project which is due, lowest bid is calculated and assigned. Lowest bid takes the total cost into account. i.e FixedPrice vs hourlyRatexhours. In case there are multiple lowest bids then a lowest bid is selected randomly among them.
