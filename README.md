@@ -65,9 +65,9 @@ By default no input params is required. Input params can be used to further filt
   - description (String): Description of the project
   - deadline (yyyy-MM-ddTHH:MM:SS+0000): Deadline of the project
 **Example** <br/>
-Input
+Input <br/>
 ```{}```
-Ouput
+Output
 ```
 {
     "requestId": "24375985-4b25-41cf-8fda-3979029601f4",
