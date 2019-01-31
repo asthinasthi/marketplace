@@ -21,7 +21,7 @@ Type: POST
   - description (String)
   - deadline (Timestamp)
 
-**Example**
+**Example** <br/>
 Input
 ```
 {
@@ -46,5 +46,59 @@ Output
 }
 ```
 ### 2. Retreive Projects
+Type GET <br/>
+**Input Params**
+By default no input params is required. Input params can be used to further filter the query.
+- name (String): Name of the project that contains this string
+- description (String): Filter by this description
+- deadline (yyyy-MM-ddTHH:MM:SS+0000): Filter for this deadline
+- nextId (Integer): Use 0 to get first Page. To scroll further send the nextId from the response
+**Output**
+- requestId (UUID String): Unique requestId for every request made
+- message (String): Message about the success/failure of the operation
+- total (Integer): Total results retrieved
+- nextId (Integer): nextId that can be sent as a parameter to retrieve further pages
+- data (List of projects)
+  - id (Integer): UniqueId of the project
+  - name (String): Name of the Project
+  - sellerId (Integer): UniqueId of the Seller of this Project
+  - description (String): Description of the project
+  - deadline (yyyy-MM-ddTHH:MM:SS+0000): Deadline of the project
+**Example** <br/>
+Input
+```{}```
+Ouput
+```
+{
+    "requestId": "24375985-4b25-41cf-8fda-3979029601f4",
+    "message": "Success",
+    "total": 100,
+    "nextId": 306,
+    "data": [
+        {
+            "id": 207,
+            "name": "Name-0",
+            "sellerId": 1,
+            "description": "Description-0",
+            "deadline": "2019-01-31T00:25:34.000+0000"
+        },
+        {
+            "id": 208,
+            "name": "Name-1",
+            "sellerId": 2,
+            "description": "Description-1",
+            "deadline": "2019-01-31T00:25:34.000+0000"
+        },
+        {
+            "id": 209,
+            "name": "Name-2",
+            "sellerId": 3,
+            "description": "Description-2",
+            "deadline": "2019-01-31T00:25:34.000+0000"
+        },
+        ...
+    ]
+}
+```
 ## Bid
 1. Create a Bid
