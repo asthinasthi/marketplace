@@ -2,6 +2,9 @@ package org.anirudh.marketplace.controller;
 
 
 import com.google.gson.Gson;
+import com.sun.tools.javah.Gen;
+import org.anirudh.marketplace.dao.BidDao;
+import org.anirudh.marketplace.dao.GeneralDao;
 import org.anirudh.marketplace.entity.Bid;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
 import org.anirudh.marketplace.service.BiddingService;
@@ -67,5 +70,22 @@ public class BidController {
             return new ResponseEntity<BidResource>(bidResource, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @RequestMapping(value = "/bid", method = RequestMethod.GET)
+    public ResponseEntity getBid(@RequestParam(value = "id") Integer id){
+        UUID requestId = UUID.randomUUID();
+        System.out.println(requestId.toString() + " GET /bid");
+        try {
+            Bid bid = biddingService.getBid(id);
+            BidResource bidResource = new BidResource(bid, "Success", requestId.toString());
+            return new ResponseEntity<BidResource>(bidResource, HttpStatus.OK);
+        } catch (ResourceNotFoundException rnfe){
+            BidResource bidResource = new BidResource(null, rnfe.getMessage(), requestId.toString());
+            return new ResponseEntity<BidResource>(bidResource, HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            BidResource bidResource = new BidResource(null, "Internal Error", requestId.toString());
+            return new ResponseEntity<BidResource>(bidResource, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

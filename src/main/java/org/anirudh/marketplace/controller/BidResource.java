@@ -14,12 +14,16 @@ import org.springframework.http.ResponseEntity;
         String requestId;
         Integer id;
         String message;
+        String name;
+        Integer projectId;
 
         public BidResource(Bid bid, String message, String requestId){
             if(bid!=null)
                 this.id = bid.getId();
             this.message = message;
             this.requestId = requestId;
+            this.name = bid.getName();
+            this.projectId = bid.getProject().getId();
         }
         public Integer getId() {
             return id;
@@ -43,5 +47,21 @@ import org.springframework.http.ResponseEntity;
 
         public void setRequestId(String requestId) {
             this.requestId = requestId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(Integer projectId) {
+            this.projectId = projectId;
         }
     }

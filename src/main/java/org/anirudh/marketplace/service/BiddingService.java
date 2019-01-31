@@ -86,4 +86,12 @@ public class BiddingService {
         return bidDao.createBid(bid);
     }
 
+    public Bid getBid(Integer id) throws ResourceNotFoundException {
+        BidDao bidDao = new BidDao(entityManagerFactory);
+        GeneralDao dao = new GeneralDao(entityManagerFactory);
+        Bid bid = (Bid)dao.findById(Bid.class, id);
+        if(bid == null) throw new ResourceNotFoundException("Invalid id");
+        return bid;
+    }
+
 }
