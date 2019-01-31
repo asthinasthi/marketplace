@@ -2,7 +2,7 @@
 
 # Available API's
 
-## ```/project``` 
+## Endpoint: ```/project``` 
 ### 1. Create a Project <br/>
 Type: POST
 
@@ -100,7 +100,7 @@ Ouput
     ]
 }
 ```
-## ```/bid ```
+## Endpoint: ```/bid ```
 ### 1. Create a Bid <br/>
 Type POST
 **Input Params**
