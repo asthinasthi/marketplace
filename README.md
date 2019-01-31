@@ -80,7 +80,9 @@ By default no input params is required. Input params can be used to further filt
   
 **Example** <br/>
 Input <br/>
-```{}```
+```
+{}
+```
 Output
 ```
 {
