@@ -1,5 +1,5 @@
 # Marketplace
-Guidelines about using the API.
+Guidelines about using the API. <br/>
 **Tech Stack:**
 - Spring Boot with Embedded Tomcat
 - MySQL Database
@@ -153,4 +153,4 @@ Output
 ```
 
 ## Background Services
-A background polls the database every min for projects due. For every project which is due, lowest bid is calculated and assigned. Lowest bid takes the total cost into account. i.e FixedPrice vs hourlyRatexhours. In case there are multiple lowest bids then a lowest bid is selected randomly among them.
+A background service polls the database every min for projects that are due. For every project which is due, lowest bid is calculated and assigned. Lowest bid takes the total cost into account. i.e FixedPrice vs hourlyRate x hours. In case there are multiple lowest bids then a lowest bid is selected randomly among them.
