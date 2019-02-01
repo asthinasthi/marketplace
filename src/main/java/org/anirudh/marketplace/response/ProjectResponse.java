@@ -1,4 +1,4 @@
-package org.anirudh.marketplace.controller;
+package org.anirudh.marketplace.response;
 
 public class ProjectResponse  {
     String requestId;

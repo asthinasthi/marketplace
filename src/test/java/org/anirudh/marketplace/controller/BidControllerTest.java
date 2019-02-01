@@ -1,16 +1,13 @@
 package org.anirudh.marketplace.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gson.Gson;
-import com.mchange.util.AssertException;
 import org.anirudh.marketplace.entity.Bid;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
+import org.anirudh.marketplace.response.BidResponse;
 import org.anirudh.marketplace.service.BiddingService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -38,7 +35,7 @@ public class BidControllerTest {
         ResponseEntity responseEntity = bidController.createBid(jsonObject.toString());
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
-        BidResource responseBid = (BidResource)responseEntity.getBody();
+        BidResponse responseBid = (BidResponse)responseEntity.getBody();
         Assert.assertEquals((Integer)responseBid.getId(), (Integer)123);
     }
 

@@ -3,6 +3,7 @@ package org.anirudh.marketplace.controller;
 import org.anirudh.marketplace.entity.Project;
 import org.anirudh.marketplace.entity.Seller;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
+import org.anirudh.marketplace.response.ProjectResponse;
 import org.anirudh.marketplace.service.ProjectService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +11,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import sun.dc.pr.PRError;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarException;
 
 import static org.mockito.Mockito.*;
 

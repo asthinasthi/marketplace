@@ -3,13 +3,15 @@ package org.anirudh.marketplace.controller;
 import com.google.gson.Gson;
 import org.anirudh.marketplace.entity.Project;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
+import org.anirudh.marketplace.response.ProjectListResponse;
+import org.anirudh.marketplace.response.ProjectPOJO;
+import org.anirudh.marketplace.response.ProjectResponse;
 import org.anirudh.marketplace.service.ProjectService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.dc.pr.PRError;
 
 import java.util.*;
 

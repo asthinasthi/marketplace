@@ -1,4 +1,4 @@
-package org.anirudh.marketplace.controller;
+package org.anirudh.marketplace.response;
 
 import com.sun.deploy.net.HttpResponse;
 import org.anirudh.marketplace.entity.Bid;
@@ -10,14 +10,14 @@ import org.springframework.http.ResponseEntity;
 * Bid Response Object
 * */
 
-    public class BidResource{
+    public class BidResponse {
         String requestId;
         Integer id;
         String message;
         String name;
         Integer projectId;
 
-        public BidResource(Bid bid, String message, String requestId){
+        public BidResponse(Bid bid, String message, String requestId){
             if(bid!=null)
                 this.id = bid.getId();
             this.message = message;
