@@ -3,12 +3,18 @@ package org.anirudh.marketplace.controller;
 
 import com.google.gson.Gson;
 import org.anirudh.marketplace.entity.Bid;
+import org.anirudh.marketplace.entity.Buyer;
+import org.anirudh.marketplace.entity.Seller;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
 import org.anirudh.marketplace.response.BidResponse;
 import org.anirudh.marketplace.service.BiddingService;
+import org.anirudh.marketplace.service.BuyerService;
+import org.anirudh.marketplace.service.SellerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,7 +25,8 @@ public class BidController {
     BiddingService biddingService = new BiddingService();
 
     @RequestMapping(value = "/bid", method = RequestMethod.POST)
-    public ResponseEntity createBid(@RequestBody String body) {
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('BUYER_USER')")
+    public ResponseEntity createBid(@RequestBody String body, OAuth2Authentication oauth) {
         UUID requestId = UUID.randomUUID();
         System.out.println(requestId.toString() + " POST /bid");
         try {
@@ -30,11 +37,10 @@ public class BidController {
             }
             Gson gson = new Gson();
             Bid bid = gson.fromJson(body, Bid.class);
-
-            if (bid.getBuyerId() == null) {
-                bidResponse = new BidResponse(null, "Missing Buyer Id", requestId.toString());
-                return new ResponseEntity<BidResponse>(bidResponse, HttpStatus.BAD_REQUEST);
-            }
+            String userName = oauth.getPrincipal().toString();
+            BuyerService buyerService = new BuyerService();
+            Buyer buyer = buyerService.getBuyerByUsername(userName);
+            bid.setBuyer(buyer);
 
             if (bid.getProjectId() == null) {
                 bidResponse = new BidResponse(null, "Missing Project Id", requestId.toString());

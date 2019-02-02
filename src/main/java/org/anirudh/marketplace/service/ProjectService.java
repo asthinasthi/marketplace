@@ -19,11 +19,8 @@ public class ProjectService {
         entityManagerFactory = Persistence.createEntityManagerFactory("marketplacePersistence");
     }
 
-    public Project createProject(Project project) throws ResourceNotFoundException {
+    public Project createProject(Project project) {
         GeneralDao dao = new GeneralDao(entityManagerFactory);
-        Seller seller = (Seller) dao.findById(Seller.class, project.getSellerId());
-        if (seller == null) throw new ResourceNotFoundException("Invalid Seller");
-        project.setSeller(seller);
         Project mergedEntity = (Project) dao.upsert(project);
         return mergedEntity;
     }

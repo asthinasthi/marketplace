@@ -33,7 +33,7 @@ public class ProjectControllerTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", "CREATED");
         jsonObject.put("sellerId", 2);
-        ResponseEntity responseEntity = projectController.createProject(jsonObject.toString());
+        ResponseEntity responseEntity = projectController.createProject(jsonObject.toString(), null);
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
         ProjectResponse projectResponse = (ProjectResponse) responseEntity.getBody();
         Assert.assertEquals((int)projectResponse.getProjectPOJO().getSellerId(),2);

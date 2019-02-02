@@ -1,5 +1,6 @@
 package org.anirudh.marketplace.entity;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -25,6 +26,9 @@ public class Seller {
 
     @Column(name="updated_by")
     private String updatedBy;
+
+    @Column(name = "app_user_id")
+    private BigInteger appUserId;
 
     public Integer getId() {
         return id;
@@ -72,5 +76,13 @@ public class Seller {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public BigInteger getAppUserId() {
+        return appUserId;
+    }
+
+    public void setAppUserId(BigInteger appUserId) {
+        this.appUserId = appUserId;
     }
 }

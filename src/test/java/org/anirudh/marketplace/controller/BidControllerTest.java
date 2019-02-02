@@ -32,7 +32,7 @@ public class BidControllerTest {
         bid.setFixedPrice(350f);
         bid.setBuyerId(2);
         when(bidController.biddingService.createBid(any())).thenReturn(bid);
-        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString());
+        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString(), null);
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
         BidResponse responseBid = (BidResponse)responseEntity.getBody();
@@ -49,7 +49,7 @@ public class BidControllerTest {
         jsonObject.put("projectId", "1");
         jsonObject.put("fixedPrice", 350f);
 
-        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString());
+        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString(), null );
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 
@@ -63,7 +63,7 @@ public class BidControllerTest {
         jsonObject.put("fixedPrice", 350f);
         jsonObject.put("buyerId", 3);
 
-        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString());
+        ResponseEntity responseEntity = bidController.createBid(jsonObject.toString(), null);
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,6 +1,7 @@
 package org.anirudh.marketplace.entity;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Entity
