@@ -1,10 +1,12 @@
 package org.anirudh.marketplace.dao;
 
 import org.anirudh.marketplace.entity.Project;
+import org.anirudh.marketplace.entity.Seller;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -34,6 +36,10 @@ public class ProjectDao {
             Root<Project> root = cq.from(Project.class);
             cq.select(root);
             List<Predicate> predicates = new ArrayList<>();
+            if(project.getSeller() != null){
+                Predicate sellerPredicate = cb.equal(root.get("seller").as(Seller.class), project.getSeller());
+                predicates.add(sellerPredicate);
+            }
             Predicate gtNextId = cb.greaterThan(root.get("id").as(Integer.class), nextId);
             predicates.add(gtNextId);
             Predicate gtDeadline = cb.greaterThanOrEqualTo(root.get("deadline").as(Date.class), project.getDeadline());
@@ -74,6 +80,26 @@ public class ProjectDao {
             cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
             em.getTransaction().begin();
             projects = em.createQuery(cq).getResultList();
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        } finally {
+            em.close();
+        }
+        return projects;
+    }
+
+    public List<Project> getProjectsByBuyer(Integer buyerId, Integer nextId){
+        EntityManager em = emf.createEntityManager();
+        List<Project> projects = null;
+        try {
+            Query q = em.createNativeQuery("select * from project p, buyer b, bid bd where p.id = bd.project_id " +
+                    "AND bd.buyer_id = b.id AND b.id =?1 AND p.id > ?2", Project.class);
+            q.setParameter(1, buyerId);
+            q.setParameter(2, nextId);
+            em.getTransaction().begin();
+            projects = q.getResultList();
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {

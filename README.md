@@ -15,6 +15,11 @@ Guidelines about using the API. <br/>
 
 ## Available API's
 
+## Endpoint: ```/auth/token```
+- Authentication is required to access each API
+- Only Sellers can create projects
+- Only Buyers can bid on projects
+
 ## Endpoint: ```/project``` 
 ### 1. Create a Project <br/>
 Type: POST
@@ -23,7 +28,6 @@ Type: POST
 - name (String) : Name of the Project
 - description (String): Brief Description of the Project
 - deadline (yyyy-MM-ddTHH:MM:SS+0000): Deadline of the project
-- sellerId (Integer): Seller uniqueId
 
 **Response**
 - requestId (UUID String): Unique requestId for every request made
@@ -41,7 +45,6 @@ Input
 "name": "Project Req: 238",
 "description": "Required competent Financial Service Professional ...",
 "deadline": "2019-02-01T05:30:00+0000",
-"sellerId": 1
 }
 ```
 Output
@@ -123,7 +126,6 @@ Type POST <br/>
 Bids must contain either ```fixedPrice``` or ```hourlyRate```&```hours``` for successful creation.
 - name (String): Name of the Bid 
 - projectId (Integer): Unique Id of the project
-- buyerId (Integer): Unique Id of the Buyer
 - fixedPrice (Float): Complete price for the entire project
 - hourlyRate (Float): Hourly rate for the project
 - hours (Float): Numbef of hours for the project
@@ -136,7 +138,6 @@ Input - FixedPrice
 ```
 {
 	"projectId":431,
-	"buyerId": 2,
 	"name": "Bid-1",
 	"fixedPrice":234
 }
@@ -145,7 +146,6 @@ Input - Hourly Rate
 ```
 {
 	"projectId":431,
-	"buyerId": 2,
 	"name": "Bid-1",
 	"hourlyRate":25.6,
   	"hours": 35

@@ -1,12 +1,14 @@
 package org.anirudh.marketplace.controller;
 
 import com.google.gson.Gson;
+import org.anirudh.marketplace.entity.Buyer;
 import org.anirudh.marketplace.entity.Project;
 import org.anirudh.marketplace.entity.Seller;
 import org.anirudh.marketplace.exceptions.ResourceNotFoundException;
 import org.anirudh.marketplace.response.ProjectListResponse;
 import org.anirudh.marketplace.response.ProjectPOJO;
 import org.anirudh.marketplace.response.ProjectResponse;
+import org.anirudh.marketplace.service.BuyerService;
 import org.anirudh.marketplace.service.ProjectService;
 import org.anirudh.marketplace.service.SellerService;
 import org.apache.commons.lang3.StringUtils;
@@ -57,12 +59,35 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('SELLER_USER') or hasAuthority('BUYER_USER')")
     public ResponseEntity getProjects(@RequestParam(name = "nextId", defaultValue = "0") Integer nextId, @RequestParam(name = "name", defaultValue = "") String name,
-                            @RequestParam(name = "description", defaultValue = "") String description, @RequestParam(name = "deadline", defaultValue = "0") Long deadline){
+                            @RequestParam(name = "description", defaultValue = "") String description, @RequestParam(name = "deadline", defaultValue = "0") Long deadline,
+                            OAuth2Authentication oauth){
         UUID requestId = UUID.randomUUID();
         System.out.println(requestId.toString() + " GET /project");
+        String userName = oauth.getPrincipal().toString();
+        String role = oauth.getUserAuthentication().getAuthorities().iterator().next().toString();
+
         try {
             Project project = new Project();
+            if(role.equals("SELLER_USER")){
+                SellerService sellerService = new SellerService();
+                Seller seller = sellerService.getSellerByUserName(userName);
+                project.setSeller(seller);
+            } else if(role.equals("BUYER_USER")){
+                BuyerService buyerService = new BuyerService();
+                Buyer buyer = buyerService.getBuyerByUsername(userName);
+                //TODO find projects bid by this user
+                ProjectService projectService = new ProjectService();
+                List<Project> projects = projectService.getProjectsByBuyer(buyer, nextId);
+                ProjectListResponse projectResource = new ProjectListResponse(projects, "Success", requestId.toString());
+                return new ResponseEntity<ProjectListResponse>(projectResource, HttpStatus.OK);
+            } else if(role.equals("ADMIN_USER")){
+                /*Do Nothing*/
+            } else {
+                //TODO
+            }
+
             if(StringUtils.isNotEmpty(name))
                 project.setName(name);
             if(StringUtils.isNotEmpty(description))

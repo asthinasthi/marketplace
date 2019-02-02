@@ -13,6 +13,9 @@ public class ProjectListResponse {
     private List<ProjectPOJO> data;
 
     public ProjectListResponse(List<Project> projects, String message, String requestId){
+        if(projects == null){
+            projects = new ArrayList<>();
+        }
         this.total = projects.size();
         if(this.total>0)
             this.nextId = projects.get(this.total-1).getId();

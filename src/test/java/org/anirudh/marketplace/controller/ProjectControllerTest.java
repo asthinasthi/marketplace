@@ -50,7 +50,7 @@ public class ProjectControllerTest {
         project.setSeller(seller);
         when(projectController.projectService.getProjects(any(), any())).thenReturn(projectList);
 
-        ResponseEntity responseEntity = projectController.getProjects(0, "", "", 0l);
+        ResponseEntity responseEntity = projectController.getProjects(0, "", "", 0l, null);
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
 }
