@@ -17,9 +17,29 @@ Guidelines about using the API. <br/>
 
 ## Endpoint: ```/auth/token```
 - Authentication is required to access each API
+- Access JWT token and pass it in the Authorization Header for every request
 - Only Sellers can create projects
-- Only Buyers can bid on projects
+- Only Buyers can bid on projects <br/>
 
+**Input**
+```
+localhost:8080/oauth/token?grant_type=password&username=<username>&password=<password>
+```
+**Output**
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoiYWRtaW4uYWRtaW4iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiZXhwIjoxNTQ5MTY4OTI5LCJhdXRob3JpdGllcyI6WyJTVEFOREFSRF9VU0VSIiwiQURNSU5fVVNFUiJdLCJqdGkiOiJmN2Q4Yzk3MS1hN2QyLTQxYzMtOTFiNy0yNzc3MWYwYWY0ZTciLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQifQ.3WQamNkzYM5hSziLvQ96N17d4X7yukRiAHOsNSFdfWw",
+    "token_type": "bearer",
+    "expires_in": 43199,
+    "scope": "read write",
+    "jti": "f7d8c971-a7d2-41c3-91b7-27771f0af4e7"
+}
+```
+
+For every request add this token to the Header
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoiYWRtaW4uYWRtaW4iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiZXhwIjoxNTQ5MTY4OTI5LCJhdXRob3JpdGllcyI6WyJTVEFOREFSRF9VU0VSIiwiQURNSU5fVVNFUiJdLCJqdGkiOiJmN2Q4Yzk3MS1hN2QyLTQxYzMtOTFiNy0yNzc3MWYwYWY0ZTciLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQifQ.3WQamNkzYM5hSziLvQ96N17d4X7yukRiAHOsNSFdfWw
+```
 ## Endpoint: ```/project``` 
 ### 1. Create a Project <br/>
 Type: POST
@@ -36,7 +56,7 @@ Type: POST
   - id (Integer): Project UniqueId
   - name (String)
   - description (String)
-  - deadline (Timestamp)
+  - deadline (Timestamp)<br/>
 
 **Example** <br/>
 Input
@@ -63,13 +83,14 @@ Output
 ```
 ### 2. Retreive Projects
 Type GET <br/>
-**Input Params**
+#### Based on the Role, users see their respective projects
+**Input Params**<br/>
 By default no input params is required. Input params can be used to further filter the query.
 - name (String): Name of the project that contains this string
 - description (String): Filter by this description
 - deadline (yyyy-MM-ddTHH:MM:SS+0000): Filter for this deadline
 - nextId (Integer): Use 0 to get first Page. To scroll further send the nextId from the response
-**Output**
+**Output**<br/>
 - requestId (UUID String): Unique requestId for every request made
 - message (String): Message about the success/failure of the operation
 - total (Integer): Total results retrieved
