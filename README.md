@@ -18,6 +18,7 @@ Guidelines about using the API. <br/>
 ## Endpoint: ```/auth/token```
 - Authentication is required to access each API
 - Access JWT token and pass it in the Authorization Header for every request
+- Admins are allowed full access
 - Only Sellers can create projects
 - Only Buyers can bid on projects <br/>
 
@@ -150,10 +151,12 @@ Bids must contain either ```fixedPrice``` or ```hourlyRate```&```hours``` for su
 - fixedPrice (Float): Complete price for the entire project
 - hourlyRate (Float): Hourly rate for the project
 - hours (Float): Numbef of hours for the project
+
 **Output**
 - requestId (String): UniqueId for request
 - id (Integer): Primary Key of the Bid Object
 - message (String): Success/Failure Message
+
 **Example**
 Input - FixedPrice
 ```
