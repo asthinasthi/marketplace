@@ -28,7 +28,7 @@ public class ProjectControllerTest {
         Seller seller = new Seller();
         seller.setId(2);
         project.setSeller(seller);
-        when(projectController.projectService.createProject(any())).thenReturn(project);
+        when(projectController.projectService.upsertProject(any())).thenReturn(project);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", "CREATED");

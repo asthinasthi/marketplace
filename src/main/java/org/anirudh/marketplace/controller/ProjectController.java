@@ -16,12 +16,9 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.anirudh.marketplace.entity.User;
 
-import java.security.Principal;
 import java.util.*;
 
 @RestController
@@ -47,10 +44,40 @@ public class ProjectController {
             project.setUpdateDate(new Date());
             project.setStatus("CREATED");
             project.setSeller(seller);
-            project =  projectService.createProject(project);
+            project =  projectService.upsertProject(project);
             ProjectResponse projectResponse = new ProjectResponse(new ProjectPOJO(project), "Success", requestId.toString());
             responseEntity = new ResponseEntity<ProjectResponse>(projectResponse, HttpStatus.OK);
         }  catch (Exception e){
+            e.printStackTrace();
+            ProjectResponse projectResponse = new ProjectResponse(null, "Internal Error", requestId.toString());
+            responseEntity = new ResponseEntity<ProjectResponse>(projectResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/project", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('SELLER_USER')")
+    public ResponseEntity updateProject(@RequestBody String body, OAuth2Authentication oauth){
+        UUID requestId = UUID.randomUUID();
+        System.out.println(requestId.toString() + " POST /project");
+        String userName = oauth.getPrincipal().toString();
+        SellerService sellerService = new SellerService();
+        Seller seller = sellerService.getSellerByUserName(userName);
+        ResponseEntity responseEntity = null;
+        try {
+            Gson gson = new Gson();
+            Project project = gson.fromJson(body, Project.class);
+            if(project.getId() == null) return new ResponseEntity<ProjectResponse>(new ProjectResponse(null, "Could not find project!", requestId.toString()), HttpStatus.BAD_REQUEST);
+            project.setUpdatedBy("project-controller");
+            project.setUpdateDate(new Date());
+            project.setSeller(seller);
+            project =  projectService.upsertProject(project);
+            ProjectResponse projectResponse = new ProjectResponse(new ProjectPOJO(project), "Success", requestId.toString());
+            responseEntity = new ResponseEntity<ProjectResponse>(projectResponse, HttpStatus.OK);
+        } catch (ResourceNotFoundException rnfe){
+            rnfe.printStackTrace();
+            responseEntity = new ResponseEntity<ProjectResponse>(new ProjectResponse(null, rnfe.getMessage(), requestId.toString()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
             e.printStackTrace();
             ProjectResponse projectResponse = new ProjectResponse(null, "Internal Error", requestId.toString());
             responseEntity = new ResponseEntity<ProjectResponse>(projectResponse, HttpStatus.INTERNAL_SERVER_ERROR);
